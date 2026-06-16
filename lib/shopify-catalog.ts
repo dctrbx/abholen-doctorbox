@@ -149,3 +149,45 @@ export const getAccentForProduct = cache(
     return cat?.accent ?? "moss";
   },
 );
+
+/** Handles aller kuratierten Kategorien (für generateStaticParams). */
+export const getCollectionHandles = (): string[] =>
+  CURATED.map((c) => c.handle);
+
+/** Komplette Kollektion (ALLE Produkte) für die interne Kategorieseite. */
+export const getCollection = cache(
+  async (handle: string): Promise<Category | null> => {
+    const cfg = CURATED.find((c) => c.handle === handle);
+    if (!hasShopify) {
+      return FALLBACK.find((c) => c.slug === handle) ?? null;
+    }
+
+    const query = `
+      query Collection($handle: String!) {
+        collection(handle: $handle) {
+          handle title
+          products(first: 50) { edges { node { ${PRODUCT_FIELDS} } } }
+        }
+      }`;
+    const data = await storefront<{ collection: GqlCollection }>(query, {
+      handle,
+    });
+    const col = data?.collection;
+    if (!col) return null;
+
+    const products = col.products.edges
+      .map((e) => mapProduct(e.node))
+      .filter((p): p is Product => p !== null);
+    if (products.length === 0) return null;
+
+    return {
+      slug: col.handle,
+      title: col.title,
+      tagline: cfg?.tagline ?? "",
+      accent: cfg?.accent ?? "moss",
+      products,
+      totalCount: products.length,
+      collectionUrl: `${SHOP_URL}/collections/${col.handle}`,
+    };
+  },
+);

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getCatalog } from "@/lib/shopify-catalog";
 import { ProductCard } from "@/components/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
@@ -50,21 +51,13 @@ export async function Categories() {
                     </h3>
                     <p className="mt-2 text-h7 text-ink/60">{category.tagline}</p>
                   </div>
-                  {category.collectionUrl ? (
-                    <a
-                      href={category.collectionUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-h8 font-medium text-moss underline-offset-4 hover:underline"
-                    >
-                      Alle {category.totalCount ?? category.products.length} Tests
-                      ansehen →
-                    </a>
-                  ) : (
-                    <span className="text-h8 text-ink/45">
-                      {category.products.length} Tests
-                    </span>
-                  )}
+                  <Link
+                    href={`/kategorie/${category.slug}`}
+                    className="text-h8 font-medium text-moss underline-offset-4 hover:underline"
+                  >
+                    Alle {category.totalCount ?? category.products.length} Tests
+                    ansehen →
+                  </Link>
                 </div>
               </Reveal>
 

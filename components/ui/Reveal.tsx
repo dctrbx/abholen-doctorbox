@@ -4,8 +4,11 @@ import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
 /**
- * Sanftes Einblenden beim Scrollen. Respektiert prefers-reduced-motion
- * (Web Interface Guidelines) und animiert nur transform/opacity.
+ * Sanftes Einblenden. Animiert beim Mount (Fade + leichtes Aufsteigen) –
+ * bewusst NICHT an eine In-View-Erkennung gekoppelt, weil die für bereits beim
+ * Laden sichtbare Inhalte (oben auf Unterseiten) unzuverlässig auslöste und
+ * Inhalte sichtbar blass hängen blieben. Garantiert sichtbaren Content,
+ * respektiert prefers-reduced-motion und animiert nur transform/opacity.
  */
 export function Reveal({
   children,
@@ -21,15 +24,18 @@ export function Reveal({
   as?: "div" | "li" | "section" | "span";
 }) {
   const reduce = useReducedMotion();
-  const MotionTag = motion[as];
+  const MotionTag = motion[as] as typeof motion.div;
+
+  if (reduce) {
+    return <MotionTag className={className}>{children}</MotionTag>;
+  }
 
   return (
     <MotionTag
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </MotionTag>
