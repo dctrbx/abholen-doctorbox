@@ -35,13 +35,13 @@ export const CURATED: {
   tagline: string;
   limit: number;
 }[] = [
+  { handle: "sexuelle-gesundheit", accent: "turquoise", tagline: "Diskret, gründlich, ohne Wartezimmer.", limit: PER_CATEGORY },
   { handle: "nahrstoffe-vitamine", accent: "green", tagline: "Zeig deinem Körper, was ihm fehlt.", limit: PER_CATEGORY },
   { handle: "allgemeine-gesundheit", accent: "okker", tagline: "Dein Rundum-Check für den Alltag.", limit: PER_CATEGORY },
   { handle: "hormone", accent: "moss", tagline: "Balance, die man messen kann.", limit: PER_CATEGORY },
   { handle: "herz-kreislauf", accent: "blue", tagline: "Werte fürs Wichtigste.", limit: PER_CATEGORY },
   { handle: "energie-vitalitat", accent: "green", tagline: "Wieder voll im Saft.", limit: PER_CATEGORY },
   { handle: "longevity", accent: "turquoise", tagline: "Gesund älter werden.", limit: PER_CATEGORY },
-  { handle: "sexuelle-gesundheit", accent: "turquoise", tagline: "Diskret, gründlich, ohne Wartezimmer.", limit: PER_CATEGORY },
   { handle: "frauengesundheit", accent: "green", tagline: "Tests, die Frauen wirklich weiterbringen.", limit: PER_CATEGORY },
   { handle: "mannergesundheit", accent: "moss", tagline: "Männergesundheit ohne Umwege.", limit: PER_CATEGORY },
   { handle: "kinderwunsch-fruchtbarkeit", accent: "okker", tagline: "Klarheit auf dem Weg zum Wunschkind.", limit: PER_CATEGORY },
