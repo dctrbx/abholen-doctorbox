@@ -58,8 +58,8 @@ export function metafieldLines(value: string | null | undefined): string[] {
 
 /**
  * Ist ein Produkt zur Abholung freigegeben?
- * Steuerung über das Shopify-Metafield `custom.abholbar` (Boolean).
- * Standard = abholbar; nur explizit „falsy" gesetzte Produkte werden auf der
+ * Steuerung über das Shopify-Metafield `custom.abholung` (Boolean).
+ * Standard = abholbar; nur explizit auf „false" gesetzte Produkte werden auf der
  * Pick-up-Seite komplett ausgeblendet (Kategorien, Suche, Detailseite).
  */
 export function isPickupable(value: string | null | undefined): boolean {

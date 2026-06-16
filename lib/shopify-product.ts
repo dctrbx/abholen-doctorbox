@@ -92,7 +92,7 @@ const QUERY = `
       images(first: 6) { edges { node { url altText } } }
       sampleMaterial: metafield(namespace: "custom", key: "sample_material") { value }
       biomarkers: metafield(namespace: "custom", key: "biomarkers") { value }
-      abholbar: metafield(namespace: "custom", key: "abholbar") { value }
+      abholbar: metafield(namespace: "custom", key: "abholung") { value }
     }
   }
 `;

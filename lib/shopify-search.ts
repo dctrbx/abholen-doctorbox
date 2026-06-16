@@ -41,7 +41,7 @@ const QUERY = `
         priceRange { minVariantPrice { amount } }
         bm: metafield(namespace: "custom", key: "biomarkers") { value }
         sm: metafield(namespace: "custom", key: "sample_material") { value }
-        ab: metafield(namespace: "custom", key: "abholbar") { value }
+        ab: metafield(namespace: "custom", key: "abholung") { value }
       } }
     }
   }
