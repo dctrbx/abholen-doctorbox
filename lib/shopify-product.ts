@@ -2,6 +2,7 @@ import { cache } from "react";
 import {
   hasShopify,
   idFromGid,
+  isPickupable,
   metafieldLines,
   SHOP_URL,
   storefront,
@@ -70,6 +71,7 @@ type GqlDetail = {
     images: { edges: { node: { url: string; altText: string | null } }[] };
     sampleMaterial: { value: string } | null;
     biomarkers: { value: string } | null;
+    abholbar: { value: string } | null;
   } | null;
 };
 
@@ -90,6 +92,7 @@ const QUERY = `
       images(first: 6) { edges { node { url altText } } }
       sampleMaterial: metafield(namespace: "custom", key: "sample_material") { value }
       biomarkers: metafield(namespace: "custom", key: "biomarkers") { value }
+      abholbar: metafield(namespace: "custom", key: "abholbar") { value }
     }
   }
 `;
@@ -108,6 +111,8 @@ export const getProduct = cache(
     const data = await storefront<GqlDetail>(QUERY, { handle });
     const p = data?.product;
     if (!p) return null;
+    // Nicht zur Abholung freigegeben → auf der Pick-up-Seite nicht erreichbar.
+    if (!isPickupable(p.abholbar?.value)) return null;
 
     const variants: ProductVariant[] = p.variants.edges.map((e) => ({
       id: idFromGid(e.node.id),

@@ -8,6 +8,7 @@ import {
 import {
   hasShopify,
   idFromGid,
+  isPickupable,
   metafieldLines,
   SHOP_URL,
   storefront,
@@ -62,6 +63,7 @@ type GqlProduct = {
   variants: { edges: { node: { id: string } }[] };
   sampleMaterial: { value: string } | null;
   biomarkers: { value: string } | null;
+  abholbar: { value: string } | null;
 };
 
 type GqlCollection = {
@@ -71,6 +73,8 @@ type GqlCollection = {
 } | null;
 
 export function mapProduct(p: GqlProduct): Product | null {
+  // Nicht zur Abholung freigegebene Produkte komplett ausblenden.
+  if (!isPickupable(p.abholbar?.value)) return null;
   const variant = p.variants.edges[0]?.node.id;
   if (!variant) return null;
   const sampleMaterial = p.sampleMaterial?.value?.trim() || undefined;
@@ -103,6 +107,7 @@ const PRODUCT_FIELDS = `
   variants(first: 1) { edges { node { id } } }
   sampleMaterial: metafield(namespace: "custom", key: "sample_material") { value }
   biomarkers: metafield(namespace: "custom", key: "biomarkers") { value }
+  abholbar: metafield(namespace: "custom", key: "abholbar") { value }
 `;
 
 function buildQuery(): string {

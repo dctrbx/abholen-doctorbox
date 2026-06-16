@@ -56,6 +56,17 @@ export function metafieldLines(value: string | null | undefined): string[] {
   return [...new Set(parts)];
 }
 
+/**
+ * Ist ein Produkt zur Abholung freigegeben?
+ * Steuerung über das Shopify-Metafield `custom.abholbar` (Boolean).
+ * Standard = abholbar; nur explizit „falsy" gesetzte Produkte werden auf der
+ * Pick-up-Seite komplett ausgeblendet (Kategorien, Suche, Detailseite).
+ */
+export function isPickupable(value: string | null | undefined): boolean {
+  const v = (value ?? "").trim().toLowerCase();
+  return !["false", "0", "no", "nein", "off", "nicht abholbar"].includes(v);
+}
+
 /** Erster aussagekräftiger Satz als Kurzbeschreibung. */
 export function toBlurb(desc: string, max = 120): string {
   const clean = desc.replace(/\s+/g, " ").trim();

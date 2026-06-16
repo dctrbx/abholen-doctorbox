@@ -1,6 +1,7 @@
 import { cache } from "react";
 import {
   hasShopify,
+  isPickupable,
   metafieldLines,
   storefront,
   toBlurb,
@@ -28,6 +29,7 @@ type GqlNode = {
   priceRange: { minVariantPrice: { amount: string } };
   bm: { value: string } | null;
   sm: { value: string } | null;
+  ab: { value: string } | null;
 };
 
 const QUERY = `
@@ -39,6 +41,7 @@ const QUERY = `
         priceRange { minVariantPrice { amount } }
         bm: metafield(namespace: "custom", key: "biomarkers") { value }
         sm: metafield(namespace: "custom", key: "sample_material") { value }
+        ab: metafield(namespace: "custom", key: "abholbar") { value }
       } }
     }
   }
@@ -63,7 +66,9 @@ export const getSearchIndex = cache(async (): Promise<SearchDoc[]> => {
   );
   if (!data) return [];
 
-  return data.products.edges.map(({ node }) => ({
+  return data.products.edges
+    .filter(({ node }) => isPickupable(node.ab?.value))
+    .map(({ node }) => ({
     handle: node.handle,
     title: node.title,
     price: Math.round(Number(node.priceRange.minVariantPrice.amount)),
