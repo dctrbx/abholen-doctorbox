@@ -26,48 +26,27 @@ import {
  */
 
 /** Kuratierte Kategorien: Reihenfolge, Akzentfarbe, Anzeige-Limit, Tagline. */
+/** Pro Kategorie auf der Startseite angezeigte Tests. */
+const PER_CATEGORY = 3;
+
 export const CURATED: {
   handle: string;
   accent: Accent;
   tagline: string;
   limit: number;
 }[] = [
-  {
-    handle: "nahrstoffe-vitamine",
-    accent: "green",
-    tagline: "Zeig deinem Körper, was ihm fehlt.",
-    limit: 6,
-  },
-  {
-    handle: "hormone",
-    accent: "moss",
-    tagline: "Balance, die man messen kann.",
-    limit: 6,
-  },
-  {
-    handle: "sexuelle-gesundheit",
-    accent: "turquoise",
-    tagline: "Diskret, gründlich, ohne Wartezimmer.",
-    limit: 6,
-  },
-  {
-    handle: "herz-kreislauf",
-    accent: "blue",
-    tagline: "Werte fürs Wichtigste.",
-    limit: 6,
-  },
-  {
-    handle: "frauengesundheit",
-    accent: "green",
-    tagline: "Tests, die Frauen wirklich weiterbringen.",
-    limit: 6,
-  },
-  {
-    handle: "vorsorge",
-    accent: "okker",
-    tagline: "Ein Rundum-Bild deiner Gesundheit.",
-    limit: 6,
-  },
+  { handle: "nahrstoffe-vitamine", accent: "green", tagline: "Zeig deinem Körper, was ihm fehlt.", limit: PER_CATEGORY },
+  { handle: "allgemeine-gesundheit", accent: "okker", tagline: "Dein Rundum-Check für den Alltag.", limit: PER_CATEGORY },
+  { handle: "hormone", accent: "moss", tagline: "Balance, die man messen kann.", limit: PER_CATEGORY },
+  { handle: "herz-kreislauf", accent: "blue", tagline: "Werte fürs Wichtigste.", limit: PER_CATEGORY },
+  { handle: "energie-vitalitat", accent: "green", tagline: "Wieder voll im Saft.", limit: PER_CATEGORY },
+  { handle: "longevity", accent: "turquoise", tagline: "Gesund älter werden.", limit: PER_CATEGORY },
+  { handle: "sexuelle-gesundheit", accent: "turquoise", tagline: "Diskret, gründlich, ohne Wartezimmer.", limit: PER_CATEGORY },
+  { handle: "frauengesundheit", accent: "green", tagline: "Tests, die Frauen wirklich weiterbringen.", limit: PER_CATEGORY },
+  { handle: "mannergesundheit", accent: "moss", tagline: "Männergesundheit ohne Umwege.", limit: PER_CATEGORY },
+  { handle: "kinderwunsch-fruchtbarkeit", accent: "okker", tagline: "Klarheit auf dem Weg zum Wunschkind.", limit: PER_CATEGORY },
+  { handle: "dna", accent: "blue", tagline: "Was in deinen Genen steckt.", limit: PER_CATEGORY },
+  { handle: "vorsorge", accent: "moss", tagline: "Früh erkennen, beruhigt leben.", limit: PER_CATEGORY },
 ];
 
 type GqlProduct = {

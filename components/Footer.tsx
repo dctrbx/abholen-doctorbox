@@ -8,14 +8,16 @@ export async function Footer() {
   const COLUMNS = [
     {
       title: "Tests",
-      links: catalog.map((c) => ({ label: c.title, href: `#${c.slug}` })),
+      links: catalog
+        .slice(0, 6)
+        .map((c) => ({ label: c.title, href: `/#${c.slug}` })),
     },
     {
       title: "DoctorBox",
       links: [
-        { label: "So funktioniert's", href: "#ablauf" },
-        { label: "Abholen", href: "#abholen" },
-        { label: "FAQ", href: "#faq" },
+        { label: "So funktioniert's", href: "/#ablauf" },
+        { label: "Abholen", href: "/#abholen" },
+        { label: "FAQ", href: "/#faq" },
       ],
     },
   ];

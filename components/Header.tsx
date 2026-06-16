@@ -8,10 +8,10 @@ import { Search } from "@/components/Search";
 import { cn } from "@/lib/cn";
 
 const NAV = [
-  { label: "So funktioniert's", href: "#ablauf" },
-  { label: "Tests", href: "#tests" },
-  { label: "Abholen", href: "#abholen" },
-  { label: "FAQ", href: "#faq" },
+  { label: "So funktioniert's", href: "/#ablauf" },
+  { label: "Tests", href: "/#tests" },
+  { label: "Abholen", href: "/#abholen" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export function Header() {
@@ -38,15 +38,15 @@ export function Header() {
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
         <div
           className={cn(
-            "mt-3 flex items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-5",
+            "mt-3 flex items-center justify-between rounded-full bg-soft/80 px-4 py-2.5 backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-5",
             scrolled
-              ? "bg-soft/80 shadow-[0_8px_30px_-14px_rgba(20,19,16,0.35)] backdrop-blur-md"
-              : "bg-transparent",
+              ? "shadow-[0_8px_30px_-14px_rgba(20,19,16,0.35)]"
+              : "shadow-[0_4px_20px_-16px_rgba(20,19,16,0.4)]",
           )}
         >
           <div className="flex items-center gap-2.5 sm:gap-3">
             <Link
-              href="#top"
+              href="/"
               aria-label="DoctorBox Startseite"
               className="flex items-center"
             >
@@ -75,7 +75,7 @@ export function Header() {
 
           <div className="flex items-center gap-1 sm:gap-2">
             <div className="hidden md:block">
-              <Button href="#tests" size="md">
+              <Button href="/#tests" size="md">
                 Test abholen
               </Button>
             </div>
@@ -137,6 +137,27 @@ export function Header() {
             : "pointer-events-none -translate-y-3 opacity-0",
         )}
       >
+        <div className="mb-6 flex items-center justify-between">
+          <span className="text-h8 font-semibold uppercase tracking-[0.14em] text-ink/40">
+            Menü
+          </span>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Menü schließen"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 text-moss transition-colors hover:bg-moss/5"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
+              <path
+                d="M6 6l12 12M18 6L6 18"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+
         <nav className="flex flex-col gap-1">
           {NAV.map((item) => (
             <Link
@@ -150,7 +171,7 @@ export function Header() {
           ))}
         </nav>
         <div className="mt-8">
-          <Button href="#tests" className="w-full" onClick={() => setOpen(false)}>
+          <Button href="/#tests" className="w-full" onClick={() => setOpen(false)}>
             Test abholen
           </Button>
         </div>

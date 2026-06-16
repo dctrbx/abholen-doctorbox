@@ -74,9 +74,27 @@ export function ProductCard({
         </h4>
 
         {product.blurb && (
-          <p className="mt-2 line-clamp-3 text-h8 leading-relaxed text-ink/65">
+          <p className="mt-2 line-clamp-2 text-h8 leading-relaxed text-ink/65">
             {product.blurb}
           </p>
+        )}
+
+        {product.biomarkers && product.biomarkers.length > 0 && (
+          <ul className="mt-3 flex flex-wrap gap-1.5">
+            {product.biomarkers.slice(0, 6).map((b) => (
+              <li
+                key={b}
+                className="rounded-full border border-moss/15 bg-lind/30 px-2.5 py-1 text-[0.75rem] font-medium text-moss"
+              >
+                {b}
+              </li>
+            ))}
+            {product.biomarkers.length > 6 && (
+              <li className="rounded-full bg-soft-2 px-2.5 py-1 text-[0.75rem] font-medium text-ink/55">
+                +{product.biomarkers.length - 6} weitere
+              </li>
+            )}
+          </ul>
         )}
 
         {product.productUrl && (
@@ -88,7 +106,7 @@ export function ProductCard({
           </Link>
         )}
 
-        <div className="mt-6 flex items-end justify-between gap-3 pt-2">
+        <div className="mt-auto flex items-end justify-between gap-3 pt-6">
           <span className={cn("text-h4 font-extrabold", a.price)}>
             {product.hasOptions && (
               <span className="mr-1 text-h8 font-medium text-ink/45">ab</span>
