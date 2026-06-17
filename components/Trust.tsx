@@ -45,8 +45,8 @@ const POINTS = [
     ),
   },
   {
-    title: "Befund in 24–48 Stunden",
-    body: "Kein langes Warten: Ergebnisse erscheinen verständlich aufbereitet digital in der DoctorBox-App.",
+    title: "Ergebnis in 72 Stunden",
+    body: "Kein langes Warten: Ergebnisse erscheinen in der Regel innerhalb von 72 Stunden nach Probeneingang – verständlich aufbereitet in der DoctorBox-App.",
     icon: (
       <path
         d="M12 7v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"

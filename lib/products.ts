@@ -20,7 +20,7 @@ export type Product = {
   price: number;
   /** Numerische Shopify Variant-ID. */
   shopifyVariantId: string;
-  /** Befundzeit, z. B. "in 24–48 h". */
+  /** Befundzeit, z. B. "in 72 h". */
   turnaround: string;
   /** Optionales Label. */
   badge?: string;
@@ -63,7 +63,7 @@ export const CATEGORIES: Category[] = [
         blurb: "Der Klassiker für graue Monate – misst deinen 25-OH-Spiegel.",
         price: 39,
         shopifyVariantId: "40000000000001",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
         popular: true,
       },
       {
@@ -72,7 +72,7 @@ export const CATEGORIES: Category[] = [
         blurb: "Wichtig bei veganer Ernährung und chronischer Müdigkeit.",
         price: 39,
         shopifyVariantId: "40000000000002",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
       },
       {
         id: "ferritin",
@@ -80,7 +80,7 @@ export const CATEGORIES: Category[] = [
         blurb: "Deckt versteckten Eisenmangel auf – die häufigste Ursache für Erschöpfung.",
         price: 44,
         shopifyVariantId: "40000000000003",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
       },
       {
         id: "omega3",
@@ -104,7 +104,7 @@ export const CATEGORIES: Category[] = [
         blurb: "TSH, fT3 und fT4 – für Energie, Gewicht und Stimmung.",
         price: 59,
         shopifyVariantId: "40000000000011",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
         popular: true,
       },
       {
@@ -113,7 +113,7 @@ export const CATEGORIES: Category[] = [
         blurb: "Antrieb, Muskelaufbau und Libido im Blick.",
         price: 49,
         shopifyVariantId: "40000000000012",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
       },
       {
         id: "cortisol",
@@ -212,7 +212,7 @@ export const CATEGORIES: Category[] = [
         blurb: "Über 20 Werte – dein jährlicher Gesundheits-Check für zuhause.",
         price: 89,
         shopifyVariantId: "40000000000041",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
         popular: true,
       },
       {
@@ -221,7 +221,7 @@ export const CATEGORIES: Category[] = [
         blurb: "LDL, HDL und Triglyceride – dein kardiovaskuläres Risiko.",
         price: 49,
         shopifyVariantId: "40000000000042",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
       },
       {
         id: "diabetes",
@@ -229,7 +229,7 @@ export const CATEGORIES: Category[] = [
         blurb: "Langzeitzucker HbA1c – erkennt ein Risiko früh.",
         price: 39,
         shopifyVariantId: "40000000000043",
-        turnaround: "in 24–48 h",
+        turnaround: "in 72 h",
       },
     ],
   },

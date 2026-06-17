@@ -54,7 +54,7 @@ export function Hero() {
             <p className="mt-6 max-w-xl text-h7 leading-relaxed text-soft/85">
               Schluss mit Versandwartezeit. Hol dein Heimtestkit direkt bei uns
               im Büro ab, teste in Ruhe zuhause und schick die Probe ins Labor –
-              Befund digital in 24–48&nbsp;Stunden.
+              Ergebnis digital innerhalb von 72&nbsp;Stunden nach Probeneingang.
             </p>
           </Reveal>
 
@@ -77,7 +77,7 @@ export function Hero() {
             <dl className="mt-12 grid max-w-md grid-cols-3 gap-6">
               {[
                 { n: "0 €", l: "Versandkosten" },
-                { n: "24–48 h", l: "bis zum Befund" },
+                { n: "72 h", l: "nach Probeneingang" },
                 { n: "100 %", l: "anonym & sicher" },
               ].map((s) => (
                 <div key={s.l}>

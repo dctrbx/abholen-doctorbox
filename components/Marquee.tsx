@@ -1,6 +1,6 @@
 const ITEMS = [
   "Akkreditierte Fachlabore",
-  "Befund in 24–48 h",
+  "Ergebnis in 72 h nach Probeneingang",
   "Keine Versandkosten",
   "100 % anonym",
   "Persönliche Beratung vor Ort",

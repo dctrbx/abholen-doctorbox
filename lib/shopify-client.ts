@@ -85,5 +85,5 @@ export function turnaround(tags: string[], sampleMaterial?: string): string {
     return "in 10–14 Tagen";
   if (t.includes("sti") || t.some((x) => x.includes("sexuell")))
     return "in 2–3 Tagen";
-  return "in 24–48 h";
+  return "in 72 h";
 }

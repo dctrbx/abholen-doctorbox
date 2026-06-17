@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     template: "%s · DoctorBox",
   },
   description:
-    "Hol deinen Gesundheits-Test direkt bei uns in der Taubenstraße 26 in Berlin ab – ohne Versandwartezeit. Labordiagnostik für zuhause, Befund in 24–48 h.",
+    "Hol deinen Gesundheits-Test direkt bei uns in der Taubenstraße 26 in Berlin ab – ohne Versandwartezeit. Labordiagnostik für zuhause, Ergebnis innerhalb 72 Stunden nach Probeneingang.",
   keywords: [
     "Heimtest",
     "Testkit Berlin",

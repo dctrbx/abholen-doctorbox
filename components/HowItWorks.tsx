@@ -14,7 +14,7 @@ const STEPS = [
   {
     n: "03",
     title: "Testen & Befund erhalten",
-    body: "Probe bequem zuhause entnehmen, kostenlos einsenden und den digitalen Befund in 24–48 h in der DoctorBox-App lesen.",
+    body: "Probe bequem zuhause entnehmen, kostenlos einsenden und das Ergebnis innerhalb von 72 Stunden nach Probeneingang in der DoctorBox-App lesen.",
   },
 ];
 

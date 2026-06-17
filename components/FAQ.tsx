@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     q: "Wie schnell bekomme ich meinen Befund?",
-    a: "In der Regel innerhalb von 24–48 Stunden nach Laboreingang. Bei aufwendigeren Analysen (z. B. Mikrobiom) dauert es 10–14 Tage. Die Zeit steht bei jedem Test dabei.",
+    a: "In der Regel innerhalb von 72 Stunden nach Probeneingang im Labor. Bei aufwendigeren Analysen (z. B. Mikrobiom) dauert es 10–14 Tage. Die Zeit steht bei jedem Test dabei.",
   },
   {
     q: "Sind meine Daten sicher?",
