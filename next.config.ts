@@ -3,11 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    // Bild-Optimierung deaktiviert: Der Optimizer-Cache (.next/cache/images)
-    // liegt auf einem externen SSD-Dateisystem, das einzelne Cache-Dateien als
-    // ._-AppleDouble-Dateien korrumpiert → sporadisch kaputte Bilder. Bilder
-    // kommen direkt vom Shopify-CDN (bereits optimiert) bzw. lokal.
-    unoptimized: true,
+    // Bild-Optimierung: auf Vercel aktiv (AVIF/WebP, responsive). Lokal aus,
+    // weil der Optimizer-Cache auf dem externen SSD-Dateisystem ._-AppleDouble-
+    // Dateien erzeugt und einzelne Bilder korrumpiert. VERCEL=1 setzt Vercel
+    // im Build automatisch.
+    unoptimized: process.env.VERCEL !== "1",
     remotePatterns: [{ protocol: "https", hostname: "cdn.shopify.com" }],
   },
 };
