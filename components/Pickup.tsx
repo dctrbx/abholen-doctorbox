@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/Button";
 
 const HOURS = [
   { d: "Montag – Freitag", h: "9:00 – 17:00 Uhr" },
-  { d: "Samstag", h: "10:00 – 14:00 Uhr" },
-  { d: "Sonntag", h: "geschlossen" },
+  { d: "Samstag & Sonntag", h: "geschlossen" },
 ];
 
 const FEATURES = [
