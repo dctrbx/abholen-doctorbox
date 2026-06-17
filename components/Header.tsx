@@ -47,55 +47,14 @@ export function Header() {
               : "shadow-[0_4px_20px_-16px_rgba(20,19,16,0.4)]",
           )}
         >
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <Link
-              href="/"
-              aria-label="DoctorBox Startseite"
-              className="flex items-center"
-            >
-              <Logo className="h-9 sm:h-10" />
-            </Link>
-            <span
-              aria-hidden="true"
-              className="h-7 w-px bg-ink/20 sm:h-8"
-            />
-            <span className="text-h7 font-semibold tracking-tight text-moss">
-              Pick-up
-            </span>
-          </div>
-
-          <nav className="hidden items-center gap-1 md:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-full px-4 py-2 text-h8 font-medium text-ink/80 transition-colors hover:bg-moss/5 hover:text-moss"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-1 sm:gap-2">
-            <div className="hidden md:block">
-              <Button
-                href={WEBAPP_URL}
-                size="md"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Test registrieren
-              </Button>
-            </div>
-
-            {/* Mobile-Toggle */}
-            <button
-              type="button"
-              aria-label={open ? "Menü schließen" : "Menü öffnen"}
-              aria-expanded={open}
-              onClick={() => setOpen((v) => !v)}
-              className="flex h-11 w-11 items-center justify-center rounded-full text-moss transition-colors hover:bg-moss/5 md:hidden"
-            >
+          {/* Burger – nur mobil, links */}
+          <button
+            type="button"
+            aria-label={open ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-moss transition-colors hover:bg-moss/5 md:hidden"
+          >
             <span className="relative flex h-4 w-6 flex-col justify-between">
               <span
                 className={cn(
@@ -116,8 +75,49 @@ export function Header() {
                 )}
               />
             </span>
-            </button>
+          </button>
+
+          {/* Marke – mobil zentriert, ab md links */}
+          <div className="flex flex-1 items-center justify-center gap-2.5 sm:gap-3 md:flex-none md:justify-start">
+            <Link
+              href="/"
+              aria-label="DoctorBox Startseite"
+              className="flex items-center"
+            >
+              <Logo className="h-9 sm:h-10" />
+            </Link>
+            <span aria-hidden="true" className="h-7 w-px bg-ink/20 sm:h-8" />
+            <span className="text-h7 font-semibold tracking-tight text-moss">
+              Pick-up
+            </span>
           </div>
+
+          <nav className="hidden items-center gap-1 md:flex">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-4 py-2 text-h8 font-medium text-ink/80 transition-colors hover:bg-moss/5 hover:text-moss"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Register – nur Desktop, rechts */}
+          <div className="hidden md:block">
+            <Button
+              href={WEBAPP_URL}
+              size="md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Test registrieren
+            </Button>
+          </div>
+
+          {/* Platzhalter, damit das Logo mobil exakt mittig bleibt */}
+          <div className="w-11 shrink-0 md:hidden" aria-hidden="true" />
         </div>
 
         {/* Suchleiste – eigene, zentrierte Reihe; blendet beim Scrollen aus */}
