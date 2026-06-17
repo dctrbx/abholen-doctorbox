@@ -14,6 +14,9 @@ const NAV = [
   { label: "FAQ", href: "/#faq" },
 ];
 
+/** Web-App zum Registrieren des Tests. */
+const WEBAPP_URL = "https://app.doctorbox.de";
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -75,8 +78,13 @@ export function Header() {
 
           <div className="flex items-center gap-1 sm:gap-2">
             <div className="hidden md:block">
-              <Button href="/#tests" size="md">
-                Test abholen
+              <Button
+                href={WEBAPP_URL}
+                size="md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Test registrieren
               </Button>
             </div>
 
@@ -171,8 +179,14 @@ export function Header() {
           ))}
         </nav>
         <div className="mt-8">
-          <Button href="/#tests" className="w-full" onClick={() => setOpen(false)}>
-            Test abholen
+          <Button
+            href={WEBAPP_URL}
+            className="w-full"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setOpen(false)}
+          >
+            Test registrieren
           </Button>
         </div>
       </div>
