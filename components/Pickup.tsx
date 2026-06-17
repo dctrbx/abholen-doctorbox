@@ -2,7 +2,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 
 const HOURS = [
-  { d: "Montag – Freitag", h: "9:00 – 18:00 Uhr" },
+  { d: "Montag – Freitag", h: "9:00 – 17:00 Uhr" },
   { d: "Samstag", h: "10:00 – 14:00 Uhr" },
   { d: "Sonntag", h: "geschlossen" },
 ];

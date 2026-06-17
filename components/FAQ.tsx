@@ -7,7 +7,7 @@ const FAQS = [
   },
   {
     q: "Wann kann ich abholen?",
-    a: "Montag bis Freitag von 9 bis 18 Uhr und samstags von 10 bis 14 Uhr. Eine Voranmeldung ist nicht nötig – bring einfach deine Bestellbestätigung mit.",
+    a: "Montag bis Freitag von 9 bis 17 Uhr und samstags von 10 bis 14 Uhr. Eine Voranmeldung ist nicht nötig – bring einfach deine Bestellbestätigung mit.",
   },
   {
     q: "Wie funktioniert der Test danach?",
