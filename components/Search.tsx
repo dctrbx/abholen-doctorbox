@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { formatPrice } from "@/lib/products";
 import type { SearchDoc } from "@/lib/shopify-search";
@@ -65,7 +66,13 @@ function rank(index: SearchDoc[], query: string): Result[] {
   return out.slice(0, 24);
 }
 
-export function Search() {
+export function Search({
+  variant = "inline",
+  className,
+}: {
+  variant?: "inline" | "trigger";
+  className?: string;
+}) {
   const [query, setQuery] = useState("");
   const [index, setIndex] = useState<SearchDoc[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -88,10 +95,14 @@ export function Search() {
     }
   }, [index, loading]);
 
-  // ⌘K / Strg+K fokussiert das Feld, Esc schließt/blurt.
+  // ⌘K / Strg+K (nur Inline/Desktop) fokussiert das Feld, Esc schließt.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      if (
+        variant === "inline" &&
+        (e.metaKey || e.ctrlKey) &&
+        e.key.toLowerCase() === "k"
+      ) {
         e.preventDefault();
         void loadIndex();
         setOpen(true);
@@ -103,10 +114,11 @@ export function Search() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [loadIndex]);
+  }, [loadIndex, variant]);
 
-  // Klick außerhalb schließt das Dropdown.
+  // Inline: Klick außerhalb schließt das Dropdown.
   useEffect(() => {
+    if (variant !== "inline") return;
     const onClick = (e: MouseEvent) => {
       if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) {
         setOpen(false);
@@ -114,15 +126,173 @@ export function Search() {
     };
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
-  }, []);
+  }, [variant]);
+
+  // Trigger/Overlay: Body-Scroll sperren + Feld fokussieren.
+  useEffect(() => {
+    if (variant !== "trigger") return;
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) requestAnimationFrame(() => inputRef.current?.focus());
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [variant, open]);
 
   const results = useMemo(
     () => (index ? rank(index, query) : []),
     [index, query],
   );
 
+  function ResultList() {
+    if (query.trim().length === 0) {
+      return (
+        <div className="p-4">
+          <p className="text-h8 text-ink/50">Beliebte Suchen</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {SUGGESTIONS.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => {
+                  setQuery(s);
+                  inputRef.current?.focus();
+                }}
+                className="rounded-full border border-moss/20 bg-soft px-3 py-1.5 text-h8 font-medium text-moss transition-colors hover:bg-moss hover:text-soft"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+          {loading && <p className="mt-6 text-h8 text-ink/40">Lade Tests…</p>}
+        </div>
+      );
+    }
+    if (results.length === 0) {
+      return (
+        <p className="p-6 text-center text-h8 text-ink/55">
+          {loading
+            ? "Lade Tests…"
+            : `Keine Tests für „${query.trim()}“ gefunden.`}
+        </p>
+      );
+    }
+    return (
+      <ul className="space-y-1">
+        {results.map(({ doc, bios }) => (
+          <li key={doc.handle}>
+            <Link
+              href={`/tests/${doc.handle}`}
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-4 rounded-2xl p-2.5 transition-colors hover:bg-lind/40"
+            >
+              <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-lind/40">
+                {doc.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={doc.image}
+                    alt=""
+                    width={56}
+                    height={56}
+                    className="h-full w-full object-contain p-1.5"
+                  />
+                ) : (
+                  <SearchIcon className="h-5 w-5 text-moss/40" />
+                )}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-h7 font-semibold text-ink">
+                  {doc.title}
+                </span>
+                {bios.length > 0 ? (
+                  <span className="mt-0.5 block truncate text-h8 text-moss">
+                    Misst u. a.: {bios.slice(0, 4).join(", ")}
+                  </span>
+                ) : (
+                  doc.category && (
+                    <span className="mt-0.5 block truncate text-h8 text-ink/50">
+                      {doc.category}
+                    </span>
+                  )
+                )}
+              </span>
+              <span className="shrink-0 text-h7 font-bold text-moss">
+                {formatPrice(doc.price)}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  // Mobile: Lupe-Icon + Overlay
+  if (variant === "trigger") {
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => {
+            void loadIndex();
+            setOpen(true);
+          }}
+          aria-label="Tests suchen"
+          className={cn(
+            "flex h-11 w-11 items-center justify-center rounded-full text-moss transition-colors hover:bg-moss/5",
+            className,
+          )}
+        >
+          <SearchIcon className="h-5 w-5" />
+        </button>
+
+        {open &&
+          typeof document !== "undefined" &&
+          createPortal(
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Test-Suche"
+            className="fixed inset-0 z-[120] flex justify-center bg-ink/40 px-4 pt-[12vh] backdrop-blur-sm"
+            onMouseDown={(e) => {
+              if (e.target === e.currentTarget) setOpen(false);
+            }}
+          >
+            <div className="flex max-h-[76vh] w-full max-w-xl flex-col overflow-hidden rounded-[var(--radius-brand)] bg-soft shadow-2xl">
+              <div className="flex items-center gap-3 border-b border-ink/10 px-5">
+                <SearchIcon className="h-5 w-5 shrink-0 text-moss" />
+                <input
+                  ref={inputRef}
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Test oder Biomarker suchen"
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-label="Tests suchen"
+                  className="h-16 w-full bg-transparent text-h6 text-ink outline-none placeholder:text-ink/40 [&::-webkit-search-cancel-button]:appearance-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Suche schließen"
+                  className="shrink-0 rounded-full px-2 py-1 text-h8 text-ink/50 hover:text-moss"
+                >
+                  Esc
+                </button>
+              </div>
+              <div className="min-h-0 flex-1 overflow-y-auto p-2">
+                <ResultList />
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+      </>
+    );
+  }
+
+  // Desktop: dauerhaftes Inline-Suchfeld
   return (
-    <div ref={wrapRef} className="relative w-full">
+    <div ref={wrapRef} className={cn("relative w-full", className)}>
       <div className="flex h-12 items-center gap-2.5 rounded-full border border-moss/20 bg-soft px-4 transition-shadow focus-within:border-moss focus-within:ring-4 focus-within:ring-moss/10">
         <SearchIcon className="h-5 w-5 shrink-0 text-moss" />
         <input
@@ -147,79 +317,7 @@ export function Search() {
 
       {open && (
         <div className="absolute inset-x-0 top-[calc(100%+8px)] z-50 max-h-[70vh] overflow-y-auto rounded-[var(--radius-brand)] border border-ink/10 bg-soft p-2 shadow-2xl">
-          {query.trim().length === 0 ? (
-            <div className="p-4">
-              <p className="text-h8 text-ink/50">Beliebte Suchen</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {SUGGESTIONS.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => {
-                      setQuery(s);
-                      inputRef.current?.focus();
-                    }}
-                    className="rounded-full border border-moss/20 bg-soft px-3 py-1.5 text-h8 font-medium text-moss transition-colors hover:bg-moss hover:text-soft"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-              {loading && <p className="mt-6 text-h8 text-ink/40">Lade Tests…</p>}
-            </div>
-          ) : results.length === 0 ? (
-            <p className="p-6 text-center text-h8 text-ink/55">
-              {loading
-                ? "Lade Tests…"
-                : `Keine Tests für „${query.trim()}“ gefunden.`}
-            </p>
-          ) : (
-            <ul className="space-y-1">
-              {results.map(({ doc, bios }) => (
-                <li key={doc.handle}>
-                  <Link
-                    href={`/tests/${doc.handle}`}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center gap-4 rounded-2xl p-2.5 transition-colors hover:bg-lind/40"
-                  >
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-lind/40">
-                      {doc.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={doc.image}
-                          alt=""
-                          width={56}
-                          height={56}
-                          className="h-full w-full object-contain p-1.5"
-                        />
-                      ) : (
-                        <SearchIcon className="h-5 w-5 text-moss/40" />
-                      )}
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-h7 font-semibold text-ink">
-                        {doc.title}
-                      </span>
-                      {bios.length > 0 ? (
-                        <span className="mt-0.5 block truncate text-h8 text-moss">
-                          Misst u. a.: {bios.slice(0, 4).join(", ")}
-                        </span>
-                      ) : (
-                        doc.category && (
-                          <span className="mt-0.5 block truncate text-h8 text-ink/50">
-                            {doc.category}
-                          </span>
-                        )
-                      )}
-                    </span>
-                    <span className="shrink-0 text-h7 font-bold text-moss">
-                      {formatPrice(doc.price)}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ResultList />
         </div>
       )}
     </div>

@@ -116,14 +116,14 @@ export function Header() {
             </Button>
           </div>
 
-          {/* Platzhalter, damit das Logo mobil exakt mittig bleibt */}
-          <div className="w-11 shrink-0 md:hidden" aria-hidden="true" />
+          {/* Lupe – nur mobil, rechts (öffnet Such-Overlay) */}
+          <Search variant="trigger" className="shrink-0 md:hidden" />
         </div>
 
-        {/* Suchleiste – eigene, zentrierte Reihe; blendet beim Scrollen aus */}
+        {/* Suchleiste – eigene, zentrierte Reihe (nur Desktop); blendet beim Scrollen aus */}
         <div
           className={cn(
-            "flex justify-center transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            "hidden justify-center transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:flex",
             scrolled
               ? "pointer-events-none mt-0 max-h-0 -translate-y-2 overflow-hidden opacity-0"
               : "mt-2 max-h-20 translate-y-0 overflow-visible opacity-100 sm:mt-2.5",
@@ -131,7 +131,7 @@ export function Header() {
           aria-hidden={scrolled}
         >
           <div className="w-full max-w-xl">
-            <Search />
+            <Search variant="inline" />
           </div>
         </div>
       </div>
