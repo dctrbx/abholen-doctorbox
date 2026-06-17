@@ -172,6 +172,13 @@ export function ProductPurchase({
                   <span className="flex h-4 w-4 items-center justify-center rounded-full border-[5px] border-moss" />
                   Abholung · Taubenstraße&nbsp;26, Berlin
                 </p>
+                <p className="mt-1.5 flex items-center gap-2 pl-6 text-h8 text-ink/55">
+                  <svg viewBox="0 0 20 20" className="h-4 w-4 shrink-0 text-moss" fill="none" aria-hidden="true">
+                    <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.6" />
+                    <path d="M10 6v4l2.5 1.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  Abholung bis 17&nbsp;Uhr
+                </p>
               </div>
             </div>
 
