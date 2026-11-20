@@ -2,7 +2,7 @@
   "name": "doctorbox-abholen",
   "version": "1.0.0",
   "private": true,
-  "description": "DoctorBox Landing Page – Heimtestkits in Berlin abholen (Taubenstraße 26)",
+  "description": "DoctorBox Landing Page \u2013 Heimtestkits in Berlin abholen (Taubenstra\u00dfe 26)",
   "engines": {
     "node": "22.x"
   },
@@ -16,9 +16,9 @@
     "geist": "^1.3.1",
     "lenis": "^1.1.18",
     "motion": "^11.13.1",
-    "next": "^15.5.19",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "next": "15.5.29",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.5",
@@ -27,5 +27,8 @@
     "@types/react-dom": "^19",
     "tailwindcss": "^4.1.5",
     "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.32"
   }
 }
