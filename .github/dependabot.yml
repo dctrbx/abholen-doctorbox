@@ -1,0 +1,20 @@
+# Wöchentliche Abhängigkeits-Updates. Sicherheitsfixes kommen zusätzlich sofort.
+# Merge auf den Standard-Branch deployt automatisch auf Scalingo.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    groups:
+      sicherheit:
+        applies-to: security-updates
+        patterns: ["*"]
+      klein:
+        applies-to: version-updates
+        update-types: ["minor", "patch"]
+        patterns: ["*"]
